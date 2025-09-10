@@ -1,0 +1,236 @@
+// Form Validation
+const contactForm = document.getElementById("contactForm");
+const inputs = {
+  name: document.getElementById("name"),
+  email: document.getElementById("email"),
+  phone: document.getElementById("phone"),
+  subject: document.getElementById("subject"),
+  message: document.getElementById("message"),
+};
+
+const errors = {
+  name: document.getElementById("nameError"),
+  email: document.getElementById("emailError"),
+  phone: document.getElementById("phoneError"),
+  subject: document.getElementById("subjectError"),
+  message: document.getElementById("messageError"),
+};
+
+const successMessage = document.getElementById("successMessage");
+
+// Validation functions
+function validateName(name) {
+  return name.length >= 2;
+}
+
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function validatePhone(phone) {
+  if (!phone) return true; // Optional field
+  const phoneRegex = /^[\+]?[\d\s\-\(\)]{10,}$/;
+  return phoneRegex.test(phone);
+}
+
+function showError(field, message) {
+  errors[field].textContent = message;
+  errors[field].classList.remove("hidden");
+  inputs[field].classList.add("border-red-400", "ring-red-500/50");
+  inputs[field].classList.remove("border-white/20");
+}
+
+function hideError(field) {
+  errors[field].classList.add("hidden");
+  inputs[field].classList.remove("border-red-400", "ring-red-500/50");
+  inputs[field].classList.add("border-white/20");
+}
+
+// Real-time validation
+inputs.name.addEventListener("blur", () => {
+  if (!validateName(inputs.name.value.trim())) {
+    showError("name", "Name must be at least 2 characters long");
+  } else {
+    hideError("name");
+  }
+});
+
+inputs.email.addEventListener("blur", () => {
+  if (!validateEmail(inputs.email.value.trim())) {
+    showError("email", "Please enter a valid email address");
+  } else {
+    hideError("email");
+  }
+});
+
+inputs.phone.addEventListener("blur", () => {
+  if (!validatePhone(inputs.phone.value.trim())) {
+    showError("phone", "Please enter a valid phone number");
+  } else {
+    hideError("phone");
+  }
+});
+
+// Form submission
+contactForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  let isValid = true;
+
+  // Validate all fields
+  if (!validateName(inputs.name.value.trim())) {
+    showError("name", "Name must be at least 2 characters long");
+    isValid = false;
+  } else {
+    hideError("name");
+  }
+
+  if (!validateEmail(inputs.email.value.trim())) {
+    showError("email", "Please enter a valid email address");
+    isValid = false;
+  } else {
+    hideError("email");
+  }
+
+  if (!validatePhone(inputs.phone.value.trim())) {
+    showError("phone", "Please enter a valid phone number");
+    isValid = false;
+  } else {
+    hideError("phone");
+  }
+
+  if (!inputs.subject.value.trim()) {
+    showError("subject", "Please enter a subject");
+    isValid = false;
+  } else {
+    hideError("subject");
+  }
+
+  if (!inputs.message.value.trim()) {
+    showError("message", "Please enter your message");
+    isValid = false;
+  } else {
+    hideError("message");
+  }
+
+  if (isValid) {
+    successMessage.classList.remove("hidden");
+    contactForm.reset();
+    setTimeout(() => {
+      successMessage.classList.add("hidden");
+    }, 5000);
+  }
+});
+
+// Todo List Functionality
+let todos = [];
+let todoId = 0;
+
+const todoInput = document.getElementById("todoInput");
+const todoList = document.getElementById("todoList");
+const totalTasks = document.getElementById("totalTasks");
+const completedTasks = document.getElementById("completedTasks");
+const remainingTasks = document.getElementById("remainingTasks");
+
+function updateStats() {
+  const total = todos.length;
+  const completed = todos.filter((todo) => todo.completed).length;
+  const remaining = total - completed;
+
+  totalTasks.textContent = total;
+  completedTasks.textContent = completed;
+  remainingTasks.textContent = remaining;
+}
+
+function renderTodos() {
+  if (todos.length === 0) {
+    todoList.innerHTML = `
+                    <div class="text-center py-16 text-gray-400">
+                        <i class="fas fa-clipboard-list text-6xl mb-4 opacity-50"></i>
+                        <p class="text-lg font-medium">No tasks yet</p>
+                        <p class="text-sm opacity-75">Add your first task above!</p>
+                    </div>
+                `;
+    updateStats();
+    return;
+  }
+
+  todoList.innerHTML = todos
+    .map(
+      (todo) => `
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 mb-3 hover:bg-white/20 transition-all duration-300 transform hover:scale-102 ${
+                  todo.completed ? "opacity-60" : ""
+                } animate-fade-in">
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <div class="flex items-center flex-1 min-w-0">
+                            <i class="fas ${
+                              todo.completed
+                                ? "fa-check-circle text-green-400"
+                                : "fa-circle text-gray-400"
+                            } text-xl mr-3 flex-shrink-0"></i>
+                            <span class="text-white font-medium ${
+                              todo.completed ? "line-through" : ""
+                            } truncate">${todo.text}</span>
+                        </div>
+                        <div class="flex items-center gap-2 flex-shrink-0">
+                            <button onclick="toggleTodo(${todo.id})" 
+                                class="px-4 py-2 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${
+                                  todo.completed
+                                    ? "bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30"
+                                    : "bg-green-500/20 text-green-400 hover:bg-green-500/30"
+                                }">
+                                <i class="fas ${
+                                  todo.completed ? "fa-undo" : "fa-check"
+                                } mr-1"></i>
+                                ${todo.completed ? "Undo" : "Done"}
+                            </button>
+                            <button onclick="deleteTodo(${todo.id})" 
+                                class="px-4 py-2 bg-red-500/20 text-red-400 rounded-xl font-medium hover:bg-red-500/30 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-trash mr-1"></i>Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `
+    )
+    .join("");
+
+  updateStats();
+}
+
+function addTodo() {
+  const text = todoInput.value.trim();
+  if (!text) return;
+
+  todos.push({
+    id: todoId++,
+    text: text,
+    completed: false,
+  });
+
+  todoInput.value = "";
+  renderTodos();
+}
+
+function toggleTodo(id) {
+  todos = todos.map((todo) =>
+    todo.id === id ? { ...todo, completed: !todo.completed } : todo
+  );
+  renderTodos();
+}
+
+function deleteTodo(id) {
+  todos = todos.filter((todo) => todo.id !== id);
+  renderTodos();
+}
+
+// Enter key to add todo
+todoInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    addTodo();
+  }
+});
+
+// Initialize
+renderTodos();

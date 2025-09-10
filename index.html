@@ -1,440 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Form & Todo List</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-</head>
+    <link rel="stylesheet" href="output.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
 
-<body class="min-h-screen bg-black lg:p-8">
-    <!-- Animated Background Elements -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div
-            class="absolute -top-4 -right-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse">
-        </div>
-        <div
-            class="absolute -bottom-8 -left-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2000">
-        </div>
-        <div
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-4000">
-        </div>
-    </div>
+  <body style="background-image: url('images/6.jpg')" class="min-h-screen bg-cover bg-center lg:p-8">
 
-    <div class="relative z-10 mx-auto max-w-3xl">
-        <!-- Header -->
-        <div class="text-center mb-16 mt-16 animate-fade-in">
-            <h1
-                class="text-5xl lg:text-7xl font-black bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-4">
-                Contact & Tasks
-            </h1>
-            <p class="text-xl text-gray-300 font-light">Beautiful forms meet powerful productivity</p>
-        </div>
+    <div class="relative z-10 mx-auto max-w-3xl ">
+      <!-- Header -->
+      <div class="text-center mb-16 mt-16">
+        <h1
+          class="text-5xl text-white/95  font-bold lg:text-7xl mb-4"
+        >
+          Contact & Tasks
+        </h1>
+        <p class="text-xl text-gray-300 font-light">
+          Beautiful forms meet powerful productivity
+        </p>
+      </div>
 
-        <!-- Main Container -->
-        <div class="flex flex-col gap-8 lg:gap-20">
-            <!-- Todo List Card -->
-            <div class="group animate-slide-up animation-delay-200">
-                <div
-                    class="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl p-8 lg:p-10 hover:bg-white/15 transition-all duration-500 hover:shadow-3xl hover:scale-105">
-                    <div class="flex items-center justify-center mb-8">
-                        <div class="bg-gradient-to-r from-green-500 to-teal-600 p-4 rounded-2xl shadow-lg">
-                            <i class="fas fa-tasks text-2xl text-white"></i>
-                        </div>
-                        <h2 class="text-3xl lg:text-4xl font-bold text-white ml-4">Todo List</h2>
-                    </div>
-
-                    <!-- Statistics -->
-                    <div class="grid grid-cols-3 gap-4 mb-8">
-                        <div
-                            class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-sm rounded-2xl p-4 border border-blue-400/30 text-center">
-                            <div class="text-2xl lg:text-3xl font-bold text-blue-400" id="totalTasks">0</div>
-                            <div class="text-xs lg:text-sm text-blue-300 font-medium">Total</div>
-                        </div>
-                        <div
-                            class="bg-gradient-to-br from-green-500/20 to-green-600/20 backdrop-blur-sm rounded-2xl p-4 border border-green-400/30 text-center">
-                            <div class="text-2xl lg:text-3xl font-bold text-green-400" id="completedTasks">0</div>
-                            <div class="text-xs lg:text-sm text-green-300 font-medium">Done</div>
-                        </div>
-                        <div
-                            class="bg-gradient-to-br from-orange-500/20 to-orange-600/20 backdrop-blur-sm rounded-2xl p-4 border border-orange-400/30 text-center">
-                            <div class="text-2xl lg:text-3xl font-bold text-orange-400" id="remainingTasks">0</div>
-                            <div class="text-xs lg:text-sm text-orange-300 font-medium">Left</div>
-                        </div>
-                    </div>
-
-                    <!-- Add Task Input -->
-                    <div class="flex flex-col lg:flex-row gap-3 mb-8">
-                        <input type="text" id="todoInput" placeholder="Add a new task..."
-                            class="flex-1 px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-green-500/50 focus:border-green-400 transition-all duration-300 hover:bg-white/20">
-                        <button onclick="addTodo()"
-                            class="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white font-bold py-4 px-6 lg:px-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group">
-                            <span class="relative z-10 flex items-center justify-center">
-                                <i class="fas fa-plus mr-2"></i>Add Task
-                            </span>
-                            <div
-                                class="absolute inset-0 bg-gradient-to-r from-teal-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                        </button>
-                    </div>
-
-                    <!-- Todo List -->
-                    <div class="max-h-96 overflow-y-auto custom-scrollbar" id="todoList">
-                        <div class="text-center py-16 text-gray-400">
-                            <i class="fas fa-clipboard-list text-6xl mb-4 opacity-50"></i>
-                            <p class="text-lg font-medium">No tasks yet</p>
-                            <p class="text-sm opacity-75">Add your first task above!</p>
-                        </div>
-                    </div>
-                </div>
+      <!-- Main Container -->
+      <div class="flex flex-col gap-8 lg:gap-20">
+        <!-- Todo List Card -->
+        <div>
+          <div
+            class="bg-white/ backdrop-blur-xl rounded-3xl border border-white/15 shadow-2xl p-8 lg:p-10 hover:transition-all duration-500 hover:shadow-3xl hover:scale-102"
+          >
+            <div class="flex items-center justify-center mb-8">
+              <div
+                class="bg-gradient-to-r from-green-500 to-teal-600 p-4 rounded-2xl shadow-lg"
+              >
+                <i class="fas fa-tasks text-2xl text-white"></i>
+              </div>
+              <h2 class="text-3xl lg:text-4xl font-bold text-white ml-4">
+                Todo List
+              </h2>
             </div>
 
-            <!-- Contact Form Card -->
-            <div class="group animate-slide-up">
+            <!-- Statistics -->
+            <div class="grid grid-cols-3 gap-4 mb-8">
+              <div
+                class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-sm rounded-2xl p-4 border border-blue-400/30 text-center"
+              >
                 <div
-                    class="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl p-8 lg:p-10 hover:bg-white/15 transition-all duration-500 hover:shadow-3xl hover:scale-105">
-                    <div class="flex items-center justify-center mb-8">
-                        <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-4 rounded-2xl shadow-lg">
-                            <i class="fas fa-envelope text-2xl text-white"></i>
-                        </div>
-                        <h2 class="text-3xl lg:text-4xl font-bold text-white ml-4">Contact Form</h2>
-                    </div>
-
-                    <form id="contactForm" class="space-y-6">
-                        <div class="space-y-2">
-                            <label for="name" class="block text-sm font-semibold text-gray-200 mb-2">
-                                <i class="fas fa-user mr-2 text-blue-400"></i>Full Name *
-                            </label>
-                            <input type="text" id="name" name="name" required
-                                class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20"
-                                placeholder="Enter your full name">
-                            <div class="error hidden text-red-400 text-sm mt-1 pl-2" id="nameError">
-                                <i class="fas fa-exclamation-triangle mr-1"></i>Please enter your full name
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="email" class="block text-sm font-semibold text-gray-200 mb-2">
-                                <i class="fas fa-envelope mr-2 text-blue-400"></i>Email Address *
-                            </label>
-                            <input type="email" id="email" name="email" required
-                                class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20"
-                                placeholder="Enter your email address">
-                            <div class="error hidden text-red-400 text-sm mt-1 pl-2" id="emailError">
-                                <i class="fas fa-exclamation-triangle mr-1"></i>Please enter a valid email address
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="phone" class="block text-sm font-semibold text-gray-200 mb-2">
-                                <i class="fas fa-phone mr-2 text-blue-400"></i>Phone Number
-                            </label>
-                            <input type="tel" id="phone" name="phone"
-                                class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20"
-                                placeholder="Enter your phone number">
-                            <div class="error hidden text-red-400 text-sm mt-1 pl-2" id="phoneError">
-                                <i class="fas fa-exclamation-triangle mr-1"></i>Please enter a valid phone number
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="subject" class="block text-sm font-semibold text-gray-200 mb-2">
-                                <i class="fas fa-tag mr-2 text-blue-400"></i>Subject *
-                            </label>
-                            <input type="text" id="subject" name="subject" required
-                                class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20"
-                                placeholder="Enter the subject">
-                            <div class="error hidden text-red-400 text-sm mt-1 pl-2" id="subjectError">
-                                <i class="fas fa-exclamation-triangle mr-1"></i>Please enter a subject
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="message" class="block text-sm font-semibold text-gray-200 mb-2">
-                                <i class="fas fa-comment-dots mr-2 text-blue-400"></i>Message *
-                            </label>
-                            <textarea id="message" name="message" required rows="5"
-                                class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20 resize-none"
-                                placeholder="Write your message here..."></textarea>
-                            <div class="error hidden text-red-400 text-sm mt-1 pl-2" id="messageError">
-                                <i class="fas fa-exclamation-triangle mr-1"></i>Please enter your message
-                            </div>
-                        </div>
-
-                        <button type="submit"
-                            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group">
-                            <span class="relative z-10 flex items-center justify-center">
-                                <i class="fas fa-paper-plane mr-2"></i>Send Message
-                            </span>
-                            <div
-                                class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                        </button>
-
-                        <div class="success hidden bg-green-500/20 backdrop-blur-sm border border-green-400/30 text-green-400 p-4 rounded-2xl text-center animate-bounce-in"
-                            id="successMessage">
-                            <i class="fas fa-check-circle mr-2"></i>Message sent successfully!
-                        </div>
-                    </form>
+                  class="text-2xl lg:text-3xl font-bold text-blue-400"
+                  id="totalTasks"
+                >
+                  0
                 </div>
+                <div class="text-xs lg:text-sm text-blue-300 font-medium">
+                  Total
+                </div>
+              </div>
+              <div
+                class="bg-gradient-to-br from-green-500/20 to-green-600/20 backdrop-blur-sm rounded-2xl p-4 border border-green-400/30 text-center"
+              >
+                <div
+                  class="text-2xl lg:text-3xl font-bold text-green-400"
+                  id="completedTasks"
+                >
+                  0
+                </div>
+                <div class="text-xs lg:text-sm text-green-300 font-medium">
+                  Done
+                </div>
+              </div>
+              <div
+                class="bg-gradient-to-br from-orange-500/20 to-orange-600/20 backdrop-blur-sm rounded-2xl p-4 border border-orange-400/30 text-center"
+              >
+                <div
+                  class="text-2xl lg:text-3xl font-bold text-orange-400"
+                  id="remainingTasks"
+                >
+                  0
+                </div>
+                <div class="text-xs lg:text-sm text-orange-300 font-medium">
+                  Left
+                </div>
+              </div>
             </div>
 
+            <!-- Add Task Input -->
+            <div class="flex flex-col lg:flex-row gap-3 mb-8">
+              <input
+                type="text"
+                id="todoInput"
+                placeholder="Add a new task..."
+                class="flex-1 px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-green-500/50 focus:border-green-400 transition-all duration-300 hover:bg-white/20"
+              />
+              <button
+                onclick="addTodo()"
+                class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 lg:px-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+              >
+                <span class="relative z-10 flex items-center justify-center">
+                  <i class="fas fa-plus mr-2"></i>Add Task
+                </span>
+                <div
+                  class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                ></div>
+              </button>
+            </div>
+
+            <!-- Todo List -->
+            <div
+              class="max-h-96 overflow-y-auto custom-scrollbar"
+              id="todoList"
+            >
+              <div class="text-center py-16 text-gray-400">
+                <i class="fas fa-clipboard-list text-6xl mb-4 opacity-50"></i>
+                <p class="text-lg font-medium">No tasks yet</p>
+                <p class="text-sm opacity-75">Add your first task above!</p>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
 
-    <style>
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-        }
+        <!-- Contact Form Card -->
+        <div>
+          <div
+            class=" backdrop-blur-xl rounded-3xl border border-white/15 shadow-2xl p-8 lg:p-10 hover:transition-all duration-500 hover:shadow-3xl hover:scale-102"
+          >
+            <div class="flex items-center justify-center mb-8">
+              <div
+                class="bg-gradient-to-r from-blue-500 to-purple-600 p-4 rounded-2xl shadow-lg"
+              >
+                <i class="fas fa-envelope text-2xl text-white"></i>
+              </div>
+              <h2 class="text-3xl lg:text-4xl font-bold text-white ml-4">
+                Contact Form
+              </h2>
+            </div>
 
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
-            border-radius: 10px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(to bottom, #2563eb, #7c3aed);
-        }
-
-        .animation-delay-200 {
-            animation-delay: 0.2s;
-        }
-
-        .animation-delay-2000 {
-            animation-delay: 2s;
-        }
-
-        .animation-delay-4000 {
-            animation-delay: 4s;
-        }
-    </style>
-
-    <script>
-        // Form Validation
-        const contactForm = document.getElementById('contactForm');
-        const inputs = {
-            name: document.getElementById('name'),
-            email: document.getElementById('email'),
-            phone: document.getElementById('phone'),
-            subject: document.getElementById('subject'),
-            message: document.getElementById('message')
-        };
-
-        const errors = {
-            name: document.getElementById('nameError'),
-            email: document.getElementById('emailError'),
-            phone: document.getElementById('phoneError'),
-            subject: document.getElementById('subjectError'),
-            message: document.getElementById('messageError')
-        };
-
-        const successMessage = document.getElementById('successMessage');
-
-        // Validation functions
-        function validateName(name) {
-            return name.length >= 2;
-        }
-
-        function validateEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        function validatePhone(phone) {
-            if (!phone) return true; // Optional field
-            const phoneRegex = /^[\+]?[\d\s\-\(\)]{10,}$/;
-            return phoneRegex.test(phone);
-        }
-
-        function showError(field, message) {
-            errors[field].textContent = message;
-            errors[field].classList.remove('hidden');
-            inputs[field].classList.add('border-red-400', 'ring-red-500/50');
-            inputs[field].classList.remove('border-white/20');
-        }
-
-        function hideError(field) {
-            errors[field].classList.add('hidden');
-            inputs[field].classList.remove('border-red-400', 'ring-red-500/50');
-            inputs[field].classList.add('border-white/20');
-        }
-
-        // Real-time validation
-        inputs.name.addEventListener('blur', () => {
-            if (!validateName(inputs.name.value.trim())) {
-                showError('name', 'Name must be at least 2 characters long');
-            } else {
-                hideError('name');
-            }
-        });
-
-        inputs.email.addEventListener('blur', () => {
-            if (!validateEmail(inputs.email.value.trim())) {
-                showError('email', 'Please enter a valid email address');
-            } else {
-                hideError('email');
-            }
-        });
-
-        inputs.phone.addEventListener('blur', () => {
-            if (!validatePhone(inputs.phone.value.trim())) {
-                showError('phone', 'Please enter a valid phone number');
-            } else {
-                hideError('phone');
-            }
-        });
-
-        // Form submission
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            let isValid = true;
-
-            // Validate all fields
-            if (!validateName(inputs.name.value.trim())) {
-                showError('name', 'Name must be at least 2 characters long');
-                isValid = false;
-            } else {
-                hideError('name');
-            }
-
-            if (!validateEmail(inputs.email.value.trim())) {
-                showError('email', 'Please enter a valid email address');
-                isValid = false;
-            } else {
-                hideError('email');
-            }
-
-            if (!validatePhone(inputs.phone.value.trim())) {
-                showError('phone', 'Please enter a valid phone number');
-                isValid = false;
-            } else {
-                hideError('phone');
-            }
-
-            if (!inputs.subject.value.trim()) {
-                showError('subject', 'Please enter a subject');
-                isValid = false;
-            } else {
-                hideError('subject');
-            }
-
-            if (!inputs.message.value.trim()) {
-                showError('message', 'Please enter your message');
-                isValid = false;
-            } else {
-                hideError('message');
-            }
-
-            if (isValid) {
-                successMessage.classList.remove('hidden');
-                contactForm.reset();
-                setTimeout(() => {
-                    successMessage.classList.add('hidden');
-                }, 5000);
-            }
-        });
-
-        // Todo List Functionality
-        let todos = [];
-        let todoId = 0;
-
-        const todoInput = document.getElementById('todoInput');
-        const todoList = document.getElementById('todoList');
-        const totalTasks = document.getElementById('totalTasks');
-        const completedTasks = document.getElementById('completedTasks');
-        const remainingTasks = document.getElementById('remainingTasks');
-
-        function updateStats() {
-            const total = todos.length;
-            const completed = todos.filter(todo => todo.completed).length;
-            const remaining = total - completed;
-
-            totalTasks.textContent = total;
-            completedTasks.textContent = completed;
-            remainingTasks.textContent = remaining;
-        }
-
-        function renderTodos() {
-            if (todos.length === 0) {
-                todoList.innerHTML = `
-                    <div class="text-center py-16 text-gray-400">
-                        <i class="fas fa-clipboard-list text-6xl mb-4 opacity-50"></i>
-                        <p class="text-lg font-medium">No tasks yet</p>
-                        <p class="text-sm opacity-75">Add your first task above!</p>
-                    </div>
-                `;
-                updateStats();
-                return;
-            }
-
-            todoList.innerHTML = todos.map(todo => `
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 mb-3 hover:bg-white/20 transition-all duration-300 transform hover:scale-102 ${todo.completed ? 'opacity-60' : ''} animate-fade-in">
-                    <div class="flex items-center justify-between flex-wrap gap-3">
-                        <div class="flex items-center flex-1 min-w-0">
-                            <i class="fas ${todo.completed ? 'fa-check-circle text-green-400' : 'fa-circle text-gray-400'} text-xl mr-3 flex-shrink-0"></i>
-                            <span class="text-white font-medium ${todo.completed ? 'line-through' : ''} truncate">${todo.text}</span>
-                        </div>
-                        <div class="flex items-center gap-2 flex-shrink-0">
-                            <button onclick="toggleTodo(${todo.id})" 
-                                class="px-4 py-2 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${todo.completed ? 'bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30' : 'bg-green-500/20 text-green-400 hover:bg-green-500/30'}">
-                                <i class="fas ${todo.completed ? 'fa-undo' : 'fa-check'} mr-1"></i>
-                                ${todo.completed ? 'Undo' : 'Done'}
-                            </button>
-                            <button onclick="deleteTodo(${todo.id})" 
-                                class="px-4 py-2 bg-red-500/20 text-red-400 rounded-xl font-medium hover:bg-red-500/30 transition-all duration-300 transform hover:scale-105">
-                                <i class="fas fa-trash mr-1"></i>Delete
-                            </button>
-                        </div>
-                    </div>
+            <form id="contactForm" class="space-y-6">
+              <div class="space-y-2">
+                <label
+                  for="name"
+                  class="block text-sm font-semibold text-gray-200 mb-2"
+                >
+                  <i class="fas fa-user mr-2 text-blue-400"></i>Full Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20"
+                  placeholder="Enter your full name"
+                />
+                <div
+                  class="error hidden text-red-400 text-sm mt-1 pl-2"
+                  id="nameError"
+                >
+                  <i class="fas fa-exclamation-triangle mr-1"></i>Please enter
+                  your full name
                 </div>
-            `).join('');
+              </div>
 
-            updateStats();
-        }
+              <div class="space-y-2">
+                <label
+                  for="email"
+                  class="block text-sm font-semibold text-gray-200 mb-2"
+                >
+                  <i class="fas fa-envelope mr-2 text-blue-400"></i>Email
+                  Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20"
+                  placeholder="Enter your email address"
+                />
+                <div
+                  class="error hidden text-red-400 text-sm mt-1 pl-2"
+                  id="emailError"
+                >
+                  <i class="fas fa-exclamation-triangle mr-1"></i>Please enter a
+                  valid email address
+                </div>
+              </div>
 
-        function addTodo() {
-            const text = todoInput.value.trim();
-            if (!text) return;
+              <div class="space-y-2">
+                <label
+                  for="phone"
+                  class="block text-sm font-semibold text-gray-200 mb-2"
+                >
+                  <i class="fas fa-phone mr-2 text-blue-400"></i>Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20"
+                  placeholder="Enter your phone number"
+                />
+                <div
+                  class="error hidden text-red-400 text-sm mt-1 pl-2"
+                  id="phoneError"
+                >
+                  <i class="fas fa-exclamation-triangle mr-1"></i>Please enter a
+                  valid phone number
+                </div>
+              </div>
 
-            todos.push({
-                id: todoId++,
-                text: text,
-                completed: false
-            });
+              <div class="space-y-2">
+                <label
+                  for="subject"
+                  class="block text-sm font-semibold text-gray-200 mb-2"
+                >
+                  <i class="fas fa-tag mr-2 text-blue-400"></i>Subject *
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  required
+                  class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20"
+                  placeholder="Enter the subject"
+                />
+                <div
+                  class="error hidden text-red-400 text-sm mt-1 pl-2"
+                  id="subjectError"
+                >
+                  <i class="fas fa-exclamation-triangle mr-1"></i>Please enter a
+                  subject
+                </div>
+              </div>
 
-            todoInput.value = '';
-            renderTodos();
-        }
+              <div class="space-y-2">
+                <label
+                  for="message"
+                  class="block text-sm font-semibold text-gray-200 mb-2"
+                >
+                  <i class="fas fa-comment-dots mr-2 text-blue-400"></i>Message
+                  *
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows="5"
+                  class="w-full px-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 hover:bg-white/20 resize-none"
+                  placeholder="Write your message here..."
+                ></textarea>
+                <div
+                  class="error hidden text-red-400 text-sm mt-1 pl-2"
+                  id="messageError"
+                >
+                  <i class="fas fa-exclamation-triangle mr-1"></i>Please enter
+                  your message
+                </div>
+              </div>
 
-        function toggleTodo(id) {
-            todos = todos.map(todo =>
-                todo.id === id ? { ...todo, completed: !todo.completed } : todo
-            );
-            renderTodos();
-        }
+              <button
+                type="submit"
+                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+              >
+                <span class="relative z-10 flex items-center justify-center">
+                  <i class="fas fa-paper-plane mr-2"></i>Send Message
+                </span>
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                ></div>
+              </button>
 
-        function deleteTodo(id) {
-            todos = todos.filter(todo => todo.id !== id);
-            renderTodos();
-        }
-
-        // Enter key to add todo
-        todoInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                addTodo();
-            }
-        });
-
-        // Initialize
-        renderTodos();
-    </script>
-</body>
-
+              <div
+                class="success hidden bg-green-500/20 backdrop-blur-sm border border-green-400/30 text-green-400 p-4 rounded-2xl text-center animate-bounce-in"
+                id="successMessage"
+              >
+                <i class="fas fa-check-circle mr-2"></i>Message sent
+                successfully!
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+        <div class="text-center text-gray-100 text-sm py-4 mt-16 bg-white/10 backdrop-blur-sm rounded-full ">
+            &copy; 2025 Vignesh Poojary. ApexPlanet Software Pvt. Ltd Internship Task.
+        </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
 </html>
